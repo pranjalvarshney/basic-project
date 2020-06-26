@@ -1,15 +1,15 @@
 const express = require('express')
-const router = express.Router()
+const userRouter = express.Router()
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const loginAuth = require('../middlewares/loginAuth')
 
-router.get('/pro',loginAuth,(req,res)=>{
+userRouter.get('/pro',loginAuth,(req,res)=>{
     res.send('hello home')
 })
 
-router.post('/signup',(req,res)=>{
+userRouter.post('/signup',(req,res)=>{
     // console.log(req.body)
     const {name, email, password} = req.body
     if(!email || !name || !password){
@@ -50,7 +50,7 @@ router.post('/signup',(req,res)=>{
     }
 })
 
-router.post('/signin',(req,res)=>{
+userRouter.post('/signin',(req,res)=>{
     const {email, password} = req.body
     if(!email || !password){
         return res.status(422).json({message: {
@@ -93,4 +93,4 @@ router.post('/signin',(req,res)=>{
     }
 })
 
-module.exports = router
+module.exports = userRouter

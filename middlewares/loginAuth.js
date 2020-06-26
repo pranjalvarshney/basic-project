@@ -23,8 +23,9 @@ module.exports = (req,res,next)=>{
         User.findById(_id)
         .then(userdata => {
             req.user = userdata
+            next()                           // calling next here since some time will be required to fetch the data
         })
-        next()
+        //next()                             // not over here        
     })
 
 }
