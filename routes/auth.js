@@ -2,9 +2,11 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const loginAuth = require('../middlewares/loginAuth')
 
-router.get('/',(req,res)=>{
-    res.send('hello aslkdla')
+router.get('/pro',loginAuth,(req,res)=>{
+    res.send('hello home')
 })
 
 router.post('/signup',(req,res)=>{
@@ -67,8 +69,12 @@ router.post('/signin',(req,res)=>{
                 bcrypt.compare(password,user.password)
                 .then(ifmatch => {
                     if(ifmatch){
+
+                        const token = jwt.sign({_id: user._id},process.env.JWTSecret )
+
                         res.status(200).json({message: {
                             msg: "Success",
+                            token: token,
                             err: false
                         }})
                     }else{
@@ -86,4 +92,5 @@ router.post('/signin',(req,res)=>{
         })
     }
 })
+
 module.exports = router
