@@ -1,0 +1,55 @@
+body{
+    background: rgb(224, 224, 224);
+}
+.Signin{
+    .submit-div{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+.Signup{
+    .submit-div{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+.Profile{
+    margin: 50px;
+    margin: auto;
+    
+    .profile-wrapper{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 20px;
+        border-bottom: 2px solid grey;
+    }
+    .profile-img{
+        flex: 1;
+        // padding: ;
+        img{
+            height: 180px;
+            width: 180px;
+            border-radius: 50%;
+        }
+    }
+    .profile-content{
+        flex: 1;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        
+        h3{
+            padding: 10px 0;
+        }
+
+        .profile-content-stats{
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+    
+}
+
