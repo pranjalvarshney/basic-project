@@ -18,6 +18,9 @@ const NavBar = () => {
                     <Nav.Link>
                         <Link to="/profile">Profile</Link>
                     </Nav.Link>
+                    <Nav.Link>
+                        <Link to="/create">Create</Link>
+                    </Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

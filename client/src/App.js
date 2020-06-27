@@ -5,6 +5,7 @@ import Home from './components/pages/Home'
 import SignIn from './components/pages/SignIn'
 import SignUp from './components/pages/SignUp'
 import Profile from './components/pages/Profile'
+import Createpost from './components/pages/CreatePost'
 
 const App = () =>{
     return(
@@ -22,6 +23,9 @@ const App = () =>{
                 </Route>
                 <Route path="/profile">
                     <Profile />
+                </Route>
+                <Route path="/create">
+                    <Createpost />
                 </Route>
                 
             </Router>
