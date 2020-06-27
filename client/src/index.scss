@@ -177,13 +177,21 @@ body{
         border-radius: 0;
         padding: 20px;
 
-        
-        input{
-            height: 40px;
-            border: none;
-            border-bottom: 1px solid grey   ;
-            outline: none;
-            margin-bottom: 20px;
+        form{
+            display: flex;
+            flex-direction: column;
+            
+            input{
+                height: 40px;
+                border: none;
+                border-bottom: 1px solid grey   ;
+                outline: none;
+                margin-bottom: 20px;
+            }
+
+            button{
+                margin: 20px 0;
+            }
         }
     }
 }
