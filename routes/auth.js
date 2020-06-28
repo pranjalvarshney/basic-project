@@ -5,9 +5,9 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const loginAuth = require('../middlewares/loginAuth')
 
-userRouter.get('/pro',loginAuth,(req,res)=>{
-    res.send('hello home')
-})
+// userRouter.get('/pro',loginAuth,(req,res)=>{
+//     res.send('hello home')
+// })
 
 userRouter.post('/signup',(req,res)=>{
     // console.log(req.body)
@@ -21,7 +21,7 @@ userRouter.post('/signup',(req,res)=>{
         User.findOne({email})
             .then(user =>{
                 if(user){
-                    res.status(422).json({message:{
+                    return res.status(422).json({message:{
                         msg: "User already exits",
                         err: true
                     }})             

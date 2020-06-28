@@ -8,6 +8,8 @@ const Post = require('./models/post')
 const userRouter = require('./routes/auth')
 const postRouter = require('./routes/post')
 
+const cors = require('cors')
+
 //// mongoDB Atlas connection
 const uri = `mongodb+srv://${process.env.MUser}:${process.env.MPassword}@cluster0-on2ha.mongodb.net/<dbname>?retryWrites=true&w=majority`
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology:true})
@@ -17,6 +19,8 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology:true})
     .catch(err => {
         console.log(err)
     })
+
+app.use(cors())
 
 app.use(express.json())
 
