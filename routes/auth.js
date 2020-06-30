@@ -71,10 +71,11 @@ userRouter.post('/signin',(req,res)=>{
                     if(ifmatch){
 
                         const token = jwt.sign({_id: user._id},process.env.JWTSecret )
-
+                        const {_id, name , email} = user
                         res.status(200).json({message: {
                             msg: "Success",
                             token: token,
+                            user: {_id,name,email},
                             err: false
                         }})
                     }else{

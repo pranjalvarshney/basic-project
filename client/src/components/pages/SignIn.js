@@ -1,10 +1,12 @@
-import React, { useState} from 'react'
+import React, { useState, useContext} from 'react'
 import { Card, Form, Button } from 'react-bootstrap'
 import { Link,useHistory  } from "react-router-dom"
+import {UserContext} from '../../App'
 import axios from 'axios'
 
 const SignIn = () =>{
 
+    const {state,dispatch} = useContext(UserContext)
     const history = useHistory()
     const [values, setValues] = useState({email: "",password: ""})
     const [error , setError] = useState({status: false, msg: "", color: ""})
@@ -34,6 +36,9 @@ const SignIn = () =>{
                 if(values.password > 5){
                     axios.post(uri,formData)
                     .then(response=> {
+                        localStorage.setItem('jwt',response.data.message.token)
+                        localStorage.setItem('user',JSON.stringify(response.data.message.user))
+                        dispatch({type:"USER",payload:response.data.message.user})
                         console.log(response)
                         setError({
                             status: false,
