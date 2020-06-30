@@ -5,24 +5,24 @@ import { UserContext } from '../App'
 
 const NavBar = () => {
 
-    const { state, dispatch } = useContext(UserContext)
+    const { state } = useContext(UserContext)
     
     const renderNav = () =>{
         if(state){
             return[
-                    <Nav.Item>
+                    <Nav.Item key={0}>
                         <Link className="nav-link" to="/profile">Profile</Link>
                     </Nav.Item>,
-                    <Nav.Item>
+                    <Nav.Item key={1}>
                         <Link className="nav-link" to="/create">Create</Link>
                     </Nav.Item>
             ]
         }else{
             return[
-                    <Nav.Item>
+                    <Nav.Item key={0}>
                         <Link className="nav-link" to="/signin">Signin</Link>
                     </Nav.Item>,
-                    <Nav.Item>
+                    <Nav.Item key={1}>
                         <Link className="nav-link" to="/signup">Signup</Link>
                     </Nav.Item>
             ]
