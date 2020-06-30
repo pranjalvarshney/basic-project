@@ -43,7 +43,7 @@ postRouter.get('/myposts',loginAuth,(req,res)=>{
     })
 })
 
-postRouter.get('/allposts',loginAuth,(req,res)=>{
+postRouter.get('/allposts',loginAuth ,(req,res)=>{
     Post.find()
     .populate("postedby","_id name")   //populate = expanding the details.... second parameter takes the required field to get
     .then(response => {

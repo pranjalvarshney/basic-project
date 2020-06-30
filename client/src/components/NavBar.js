@@ -1,11 +1,12 @@
 import React, {useContext} from 'react'
 import { Navbar , Nav } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { UserContext } from '../App'
 
 const NavBar = () => {
 
-    const { state } = useContext(UserContext)
+    const history = useHistory()
+    const { state, dispatch } = useContext(UserContext)
     
     const renderNav = () =>{
         if(state){
@@ -15,7 +16,15 @@ const NavBar = () => {
                     </Nav.Item>,
                     <Nav.Item key={1}>
                         <Link className="nav-link" to="/create">Create</Link>
+                    </Nav.Item>,
+                    <Nav.Item key={2}>
+                        <button className="btn btn-dark " onClick={()=>{
+                            localStorage.clear()
+                            dispatch({type: "CLEAR"})
+                            history.push("/signin")
+                        }}>Logout</button>
                     </Nav.Item>
+                    
             ]
         }else{
             return[
@@ -31,7 +40,7 @@ const NavBar = () => {
     return(
         
 
-        <Navbar bg="dark" variant="dark" expand="lg">
+        <Navbar bg="dark" variant="dark" expand="lg" className="py-4">
             <Navbar.Brand><Link to={state?"/": "/signin"}>React-App</Link></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
