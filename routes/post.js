@@ -58,4 +58,44 @@ postRouter.get('/allposts',loginAuth ,(req,res)=>{
     })
 })
 
+postRouter.put('/like',loginAuth,(req,res)=>{
+    Post.findByIdAndUpdate(req.body.postId,{
+        $push: { likes: req.user._id},   
+    },{
+        new: true
+    })
+    .exec((err, result)=>{
+        if(err){
+            res.status(422).json({message: {
+                msg: "Error",
+                err: true
+            }})
+        }else{
+            res.status(200).json({message:{
+                data: result
+            }})
+        }
+    })
+})
+
+postRouter.put('/unlike',loginAuth,(req,res)=>{
+    Post.findByIdAndUpdate(req.body.postId,{
+        $pull: { likes: req.user._id},   
+    },{
+        new: true
+    })
+    .exec((err, result)=>{
+        if(err){
+            res.status(422).json({message: {
+                msg: "Error",
+                err: true
+            }})
+        }else{
+            res.status(200).json({message:{
+                data: result
+            }})
+        }
+    })
+})
+
 module.exports = postRouter
