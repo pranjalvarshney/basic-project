@@ -1,15 +1,19 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect,useState,useContext} from 'react'
 import { Card } from 'react-bootstrap'
 import Star from '@material-ui/icons/Star';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SendIcon from '@material-ui/icons/Send';
 import axios from 'axios'
+import {UserContext} from '../../App'
 
 const Home = () =>{
 
     const [data,setData] = useState([])
     const [like,setLike] = useState(false)
 
+    const {state,dispatch} = useContext(UserContext)
+
+    
     const uri = "http://localhost:4000/allposts"
     
     useEffect(()=>{
@@ -31,6 +35,7 @@ const Home = () =>{
     },[like])
     
     const likePost = (id) =>{ 
+
         axios.put("http://localhost:4000/like",{postId:id},{
             headers:{
                 "Authorization" : "Bearer " + localStorage.getItem('jwt')
@@ -38,6 +43,7 @@ const Home = () =>{
         })
         .then(response => {
             console.log(response)
+            setLike({like:false})
         })
         .catch(err => console.log(err.response))
     }
@@ -49,15 +55,16 @@ const Home = () =>{
         })
         .then(response => {
             console.log(response)
+            setLike({like:false})
         })
         .catch(err => console.log(err.response))
     }
 
-    const likefunction = (id) =>{
-        setLike(!like)
-        !like ? likePost(id) : unlikePost(id)  
+    // const likefunction = (id) =>{
+    //     setLike({...like,like:!like})
+    //     !like ? likePost(id) : unlikePost(id)  
         
-    }
+    // }
     
     return (
         <div className="Home">
@@ -76,9 +83,14 @@ const Home = () =>{
                                 <h5>{item.postedby.name}</h5>
                             </div>
                             <div className="post-actions">
-                                <Star className="post-star-icon" style={!like? {color: "lightgrey"}:{color:"red"}} onClick={()=>likefunction(item._id)}/>
-                                <ChatBubbleOutlineIcon className="post-comment-icon"/>
-                                <SendIcon className="post-send-icon"/>
+                            {
+                                !item.likes.includes(state._id)
+                                ?
+                                <Star className="post-star-icon" style={{color: "lightgrey"}} onClick={()=>likePost(item._id)}/>
+                                :
+                                <Star className="post-star-icon" style={{color:"red"}} onClick={()=>unlikePost(item._id)}/>
+
+                            }
                             </div>
                             <h6 className="ml-3">{item.likes.length} Stars</h6>
                             <div className="post-body">
