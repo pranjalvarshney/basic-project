@@ -10,12 +10,35 @@ const Home = () =>{
 
     const [data,setData] = useState([])
     const [like,setLike] = useState(false)
-
+    const [comment, setcomment] = useState("")
     const {state,dispatch} = useContext(UserContext)
 
     
     const uri = "http://localhost:4000/allposts"
     
+    
+    const handleCommentSubmit = (e,id) =>{
+        e.preventDefault()
+        makeComment(id)
+
+    }
+    const makeComment = (id) => {
+
+        axios.put("http://localhost:4000/comment",{text: comment,postId: id},{
+            headers:{
+                "Authorization": 'Bearer ' +  localStorage.getItem('jwt')
+            }
+
+        })
+        .then(response =>{
+            console.log(response)
+        })
+        .catch(err => {
+            console.log(err.response)
+        })
+    }
+
+
     useEffect(()=>{
         axios.get(uri,{
             headers:{
@@ -42,7 +65,6 @@ const Home = () =>{
             }
         })
         .then(response => {
-            console.log(response)
             setLike({like:false})
         })
         .catch(err => console.log(err.response))
@@ -54,17 +76,11 @@ const Home = () =>{
             }
         })
         .then(response => {
-            console.log(response)
             setLike({like:false})
         })
         .catch(err => console.log(err.response))
     }
 
-    // const likefunction = (id) =>{
-    //     setLike({...like,like:!like})
-    //     !like ? likePost(id) : unlikePost(id)  
-        
-    // }
     
     return (
         <div className="Home">
@@ -98,8 +114,10 @@ const Home = () =>{
                                 <p>{item.body}</p>
                             </div>
                             <div className="post-comment">
-                                <form>
+                                <form onSubmit={e=>handleCommentSubmit(e,item._id)}>
                                     <input
+                                        value={comment}
+                                        onChange={e=>setcomment(e.target.value)}
                                         type="text"
                                         placeholder="add comment..."
                                     />

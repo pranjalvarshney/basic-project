@@ -3,6 +3,7 @@ const postRouter = express.Router()
 const Post = require('../models/post')
 const loginAuth = require('../middlewares/loginAuth')
 const { response } = require('express')
+const user = require('../models/user')
 
 postRouter.post('/createpost',loginAuth,(req,res)=>{
     const {title,body} = req.body
@@ -89,6 +90,28 @@ postRouter.put('/unlike',loginAuth,(req,res)=>{
             res.status(422).json({message: {
                 msg: "Error",
                 err: true
+            }})
+        }else{
+            res.status(200).json({message:{
+                data: result
+            }})
+        }
+    })
+})
+
+postRouter.put('/comment',loginAuth,(req,res) => {
+    const comment = {
+        text: req.body.text,
+        postedby: req.user._id
+    }
+    Post.findByIdAndUpdate(req.body.postId,{
+        $push: {comments: comment}
+    },{
+        new: true
+    }).exec((err,result)=>{
+        if(err){
+            res.status(422).json({message:{
+                errormsg: err,
             }})
         }else{
             res.status(200).json({message:{
